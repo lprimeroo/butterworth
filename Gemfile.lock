@@ -1,0 +1,15 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    fft (0.0.1)
+      gnuplot
+    gnuplot (2.6.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  fft
+
+BUNDLED WITH
+   1.13.6
