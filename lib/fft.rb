@@ -1,16 +1,9 @@
 require 'complex'
  
 class Array
-	# DFT and inverse.
-	# 
-	# Algorithm from 
-	# 'Meyberg, Vachenauer: Hoehere Mathematik II, Springer Berlin, 1991, page 332'
-	#
-	# See http://blog.mro.name/2011/04/simple-ruby-fast-fourier-transform/ 
-	#
+
 	def fft doinverse = false
 		src = self
-		# raise ArgumentError.new "Expected array input but was '#{src.class}'" unless src.kind_of? Array
 		n = src.length
 		nlog2 = Math.log( n ) / Math.log( 2 )
 		raise ArgumentError.new "Input array size must be a power of two but was '#{n}'" unless nlog2.floor - nlog2 == 0.0
@@ -22,11 +15,9 @@ class Array
 			src.collect!{|c| c /= n.to_f}
 		end
  
-		# build a sine/cosine table
 		wt = Array.new n2
 		wt.each_index { |i| wt[i] = Complex.new Math.cos(i * phi), Math.sin(i * phi) }
  
-		# bit reordering
 		n1 = n - 1
 		j = 0
 		1.upto(n1) do |i|
@@ -39,7 +30,6 @@ class Array
 			src[i],src[j] = src[j],src[i] if j > i
 		end
  
-		# 1d(N) Ueberlagerungen
 		mm = 1
 		begin
 			m = mm
@@ -59,7 +49,6 @@ class Array
 end
  
 class String
-	# parse Complex.new.to_s
 	def to_c
 		m = @@PATTERN.match self
 		return nil if m.nil?
