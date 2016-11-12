@@ -1,3 +1,3 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
-gem 'fft'
+gem 'rspec', '3.5.0'

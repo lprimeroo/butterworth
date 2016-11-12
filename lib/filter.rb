@@ -1,4 +1,4 @@
-require 'fft'
+require_relative 'fft.rb'
 
 class ButterworthFilter
 
@@ -45,4 +45,5 @@ class ButterworthFilter
 		filtered_matrix = self.to_spacial_domain(processed_matrix)
 		return filtered_matrix
 	end
+	
 end
