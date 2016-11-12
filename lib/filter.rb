@@ -22,11 +22,11 @@ class ButterworthFilter
 
 	def low_pass_filter(n, cutoff_frequency, epsilon=1)
 		processed_matrix = self.to_frequency_domain
-		for i in 0..@rows
-			for j in 0..@columns
-				omega = Math.sqrt((i - @row_split)**2 + (j - @col_split)**2)
+		processed_matrix.each_with_index do |current_row, xi|
+			current_row.each_with_index do |element, yi|
+				omega = Math.sqrt((xi - @row_split)**2 + (yi - @col_split)**2)
 				base = 1 + epsilon * ((omega / cutoff_frequency) ** (2 * n))
-				processed_matrix[i][j] *= 1 / base
+				element *= 1 / base
 			end
 		end
 		filtered_matrix = self.to_spacial_domain(processed_matrix)
@@ -35,15 +35,15 @@ class ButterworthFilter
 
 	def high_pass_filter(n, cutoff_frequency, epsilon=1)
 		processed_matrix = self.to_frequency_domain
-		for i in 0..@rows
-			for j in 0..@columns
-				omega = Math.sqrt((i - @row_split)**2 + (j - @col_split)**2)
+		processed_matrix.each_with_index do |current_row, xi|
+			current_row.each_with_index do |element, yi|
+				omega = Math.sqrt((xi - @row_split)**2 + (yi - @col_split)**2)
 				base = 1 + epsilon * ((omega / cutoff_frequency) ** (2 * n))
-				processed_matrix[i][j] *= 1 - (1 / base)
+				element *= 1 - (1 / base)
 			end
 		end
 		filtered_matrix = self.to_spacial_domain(processed_matrix)
 		return filtered_matrix
 	end
-	
+
 end
