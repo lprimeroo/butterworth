@@ -1,4 +1,4 @@
-require_relative 'fft.rb'
+require 'fftw3'
 
 class ButterworthFilter
 	
@@ -11,13 +11,15 @@ class ButterworthFilter
 	end
 
 	def to_frequency_domain
-		auxiliary_matrix = @image_matrix.fft
-		return auxiliary_matrix
+		auxiliary_matrix = NArray.to_na(@image_matrix.fft)
+		converted_matrix = FFTW3.fft(auxiliary_matrix).to_a
+		return converted_matrix
 	end
 
 	def to_spacial_domain smoothened_matrix
-		final_matrix = smoothened_matrix.rfft
-		return final_matrix
+		auxiliary_matrix = NArray.to_na(smoothened_matrix)
+		converted_matrix = FFTW3.fft_bk(auxiliary_matrix).to_a
+		return converted_matrix
 	end
 
 	def low_pass_filter n, cutoff_frequency, epsilon=1
@@ -45,7 +47,7 @@ class ButterworthFilter
 				element *= 1 - (1 / base)
 			end
 		end
-		
+
 		filtered_matrix = self.to_spacial_domain(processed_matrix)
 		return filtered_matrix
 	end
