@@ -22,4 +22,20 @@ describe ButterworthFilter do
 		end
 	end
 
+	describe ".low_pass_filter" do
+		context "given image array" do
+			it "returns low pass filtered array" do
+				expect(test_object.to_spacial_domain(fft_output)).to eql(test_image_array)
+			end
+		end
+	end
+
+	describe ".high_pass_filter" do
+		context "given image array" do
+			it "returns high pass filtered array" do
+				expect(test_object.to_spacial_domain(fft_output)).to eql(test_image_array)
+			end
+		end
+	end
+
 end
